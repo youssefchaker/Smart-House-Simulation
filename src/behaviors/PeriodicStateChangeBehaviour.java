@@ -1,19 +1,19 @@
 package behaviors;
 
 import agents.EnergyManagementAgent;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 
 import java.util.Random;
 
-public class PeriodicStateChangeBehaviour extends OneShotBehaviour {
+public class PeriodicStateChangeBehaviour extends TickerBehaviour {
     private final EnergyManagementAgent energyManagementAgent;
 
-    public PeriodicStateChangeBehaviour(EnergyManagementAgent agent) {
-        super(agent);
+    public PeriodicStateChangeBehaviour(EnergyManagementAgent agent, long period) {
+        super(agent, period);
         this.energyManagementAgent = agent;
     }
 
-    public void action() {
+    protected void onTick() {
         Random rand = new Random();
         if (rand.nextDouble() < EnergyManagementAgent.CHANGE_STATE_PROBABILITY) {
             energyManagementAgent.setFridgeState(!energyManagementAgent.isFridgeState());

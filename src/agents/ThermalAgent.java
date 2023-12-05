@@ -38,7 +38,7 @@ public class ThermalAgent extends Agent {
             if (globalHeatLevel >= ALERT_THRESHOLD) {
                 ACLMessage alertMsg = new ACLMessage(ACLMessage.INFORM);
                 alertMsg.addReceiver(getAID(mainControllerName));
-                alertMsg.setContent(myAgent.getLocalName()+": High temperature detected!");
+                alertMsg.setContent("Thermal Alert: High temperature detected!");
                 send(alertMsg);
 
                 String alertMessage = myAgent.getLocalName()+ " Agent " + ": Thermal Alert - High temperature detected!";

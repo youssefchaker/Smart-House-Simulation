@@ -1,6 +1,7 @@
 package agents;
 
-import behaviors.EnergyManagementBehaviour;
+import behaviors.PeriodicEnergyManagementBehaviour;
+import behaviors.PeriodicMachineStatusReportBehaviour;
 import behaviors.PeriodicStateChangeBehaviour;
 import behaviors.PeriodicThresholdUpdateBehaviour;
 import jade.core.Agent;
@@ -13,21 +14,22 @@ public class EnergyManagementAgent extends Agent {
     private boolean fridgeState;
     private boolean tvState;
     private boolean ovenState;
-    private int threshold;
+    private int threshold=300;
 
     protected void setup() {
         mainControllerName = "MainController";
-        fridgeState = true;
-        tvState = true;
-        ovenState = true;
+        fridgeState = false;
+        tvState = false;
+        ovenState = false;
 
         String initialMessage = "My name is " + this.getLocalName() + " and I manage electric energy in the smart house.";
         System.out.println(initialMessage);
         JavaFXApplication.appendMessage(initialMessage);
 
-        addBehaviour(new EnergyManagementBehaviour(this));
-        addBehaviour(new PeriodicStateChangeBehaviour(this));
-        addBehaviour(new PeriodicThresholdUpdateBehaviour(this));
+        addBehaviour(new PeriodicEnergyManagementBehaviour(this, 5000));
+        addBehaviour(new PeriodicStateChangeBehaviour(this, 5000));
+        addBehaviour(new PeriodicThresholdUpdateBehaviour(this, 5000));
+        addBehaviour(new PeriodicMachineStatusReportBehaviour(this, 5000)); 
     }
 
     public String getMainControllerName() {
@@ -87,23 +89,19 @@ public class EnergyManagementAgent extends Agent {
         return fridgeElectricity + tvElectricity + ovenElectricity;
     }
 
-	public void setFridgeState(boolean b) {
-		this.fridgeState=b;
-		
-	}
-	
-	public void setTvState(boolean b) {
-		this.tvState=b;
-		
-	}
-	
-	public void setOvenState(boolean b) {
-		this.ovenState=b;
-		
-	}
+    public void setFridgeState(boolean b) {
+        this.fridgeState = b;
+    }
 
-	public void setThreshold(int nextInt) {
-		threshold=nextInt;
-		
-	}
+    public void setTvState(boolean b) {
+        this.tvState = b;
+    }
+
+    public void setOvenState(boolean b) {
+        this.ovenState = b;
+    }
+
+    public void setThreshold(int nextInt) {
+        threshold = nextInt;
+    }
 }

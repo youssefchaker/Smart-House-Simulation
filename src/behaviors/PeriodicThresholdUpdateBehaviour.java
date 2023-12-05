@@ -1,20 +1,20 @@
 package behaviors;
 
 import agents.EnergyManagementAgent;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 
 import java.util.Random;
 
-public class PeriodicThresholdUpdateBehaviour extends OneShotBehaviour {
+public class PeriodicThresholdUpdateBehaviour extends TickerBehaviour {
     private final EnergyManagementAgent energyManagementAgent;
 
-    public PeriodicThresholdUpdateBehaviour(EnergyManagementAgent agent) {
-        super(agent);
+    public PeriodicThresholdUpdateBehaviour(EnergyManagementAgent agent, long period) {
+        super(agent, period);
         this.energyManagementAgent = agent;
     }
 
-    public void action() {
+    protected void onTick() {
         Random rand = new Random();
-        energyManagementAgent.setThreshold(rand.nextInt(501));
+        energyManagementAgent.setThreshold(rand.nextInt(1));
     }
 }

@@ -63,8 +63,8 @@ public class MainControllerAgent extends Agent {
                         send(replyMaintenance);
                         break;
 
-                    case "Energy Management: Powerhouse Status":
-                        message = "Main Controller Agent: Received Energy Management Update. Checking powerhouses.";
+                    case "Energy OverLoad: Powerhouse Status":
+                        message = "Main Controller Agent: Received Energy OverLoad Alert. Checking powerhouses.";
                         System.out.println(message);
                         JavaFXApplication.appendMessage(message);
 
