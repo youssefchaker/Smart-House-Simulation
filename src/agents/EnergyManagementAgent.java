@@ -1,15 +1,13 @@
 package agents;
 
+import behaviors.EnergyManagementBehaviour;
+import behaviors.PeriodicStateChangeBehaviour;
+import behaviors.PeriodicThresholdUpdateBehaviour;
 import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
-import jade.lang.acl.ACLMessage;
 import ui.JavaFXApplication;
 
-import java.util.Random;
-
 public class EnergyManagementAgent extends Agent {
-    private static final double CHANGE_STATE_PROBABILITY = 0.6;
+    public static final double CHANGE_STATE_PROBABILITY = 0.6;
 
     private String mainControllerName;
     private boolean fridgeState;
@@ -23,7 +21,7 @@ public class EnergyManagementAgent extends Agent {
         tvState = true;
         ovenState = true;
 
-        String initialMessage = "Hello. My name is " + this.getLocalName() + " and I manage electric energy in the smart house.";
+        String initialMessage = "My name is " + this.getLocalName() + " and I manage electric energy in the smart house.";
         System.out.println(initialMessage);
         JavaFXApplication.appendMessage(initialMessage);
 
@@ -32,7 +30,27 @@ public class EnergyManagementAgent extends Agent {
         addBehaviour(new PeriodicThresholdUpdateBehaviour(this));
     }
 
-    private void turnOffDevice(int deviceToTurnOff) {
+    public String getMainControllerName() {
+        return mainControllerName;
+    }
+
+    public boolean isFridgeState() {
+        return fridgeState;
+    }
+
+    public boolean isTvState() {
+        return tvState;
+    }
+
+    public boolean isOvenState() {
+        return ovenState;
+    }
+
+    public int getThreshold() {
+        return threshold;
+    }
+
+    public void turnOffDevice(int deviceToTurnOff) {
         String deviceName = "";
         switch (deviceToTurnOff) {
             case 0:
@@ -62,63 +80,30 @@ public class EnergyManagementAgent extends Agent {
         JavaFXApplication.appendMessage(message);
     }
 
-    private class EnergyManagementBehaviour extends CyclicBehaviour {
-        public EnergyManagementBehaviour(Agent agent) {
-            super(agent);
-        }
-
-        public void action() {
-            if (fridgeState && tvState && ovenState && (getTotalElectricity() > threshold)) {
-                ACLMessage shutdownMsg = new ACLMessage(ACLMessage.REQUEST);
-                shutdownMsg.addReceiver(getAID(mainControllerName));
-                shutdownMsg.setContent("Energy Management: Powerhouse Status");
-                send(shutdownMsg);
-
-                ACLMessage reply = blockingReceive();
-                if (reply != null && reply.getContent().matches("\\d")) {
-                    int deviceToTurnOff = Integer.parseInt(reply.getContent());
-                    turnOffDevice(deviceToTurnOff);
-                }
-            } else {
-                this.block();
-            }
-        }
-    }
-
-    private class PeriodicStateChangeBehaviour extends OneShotBehaviour {
-        public PeriodicStateChangeBehaviour(Agent agent) {
-            super(agent);
-        }
-
-        public void action() {
-            Random rand = new Random();
-            if (rand.nextDouble() < CHANGE_STATE_PROBABILITY) {
-                fridgeState = !fridgeState;
-            }
-            if (rand.nextDouble() < CHANGE_STATE_PROBABILITY) {
-                tvState = !tvState;
-            }
-            if (rand.nextDouble() < CHANGE_STATE_PROBABILITY) {
-                ovenState = !ovenState;
-            }
-        }
-    }
-
-    private class PeriodicThresholdUpdateBehaviour extends OneShotBehaviour {
-        public PeriodicThresholdUpdateBehaviour(Agent agent) {
-            super(agent);
-        }
-
-        public void action() {
-            Random rand = new Random();
-            threshold = rand.nextInt(501);
-        }
-    }
-
-    private int getTotalElectricity() {
+    public int getTotalElectricity() {
         int fridgeElectricity = fridgeState ? 100 : 0;
         int tvElectricity = tvState ? 150 : 0;
         int ovenElectricity = ovenState ? 200 : 0;
         return fridgeElectricity + tvElectricity + ovenElectricity;
     }
+
+	public void setFridgeState(boolean b) {
+		this.fridgeState=b;
+		
+	}
+	
+	public void setTvState(boolean b) {
+		this.tvState=b;
+		
+	}
+	
+	public void setOvenState(boolean b) {
+		this.ovenState=b;
+		
+	}
+
+	public void setThreshold(int nextInt) {
+		threshold=nextInt;
+		
+	}
 }

@@ -10,7 +10,7 @@ import java.util.Random;
 public class MainControllerAgent extends Agent {
 
     protected void setup() {
-        String initialMessage = "Hello. My name is " + this.getLocalName() + " and I am the main controller agent.";
+        String initialMessage = "My name is " + this.getLocalName() + " and I am the main controller agent managing the other agents";
         System.out.println(initialMessage);
         JavaFXApplication.appendMessage(initialMessage);
 
@@ -31,7 +31,7 @@ public class MainControllerAgent extends Agent {
 
                 switch (content) {
                     case "Thermal Alert: High temperature detected!":
-                        message = "Main Controller: Received Thermal Alert. Taking necessary action.";
+                        message = "Main Controller Agent: Received Thermal Alert. Taking necessary action.";
                         System.out.println(message);
                         JavaFXApplication.appendMessage(message);
 
@@ -42,7 +42,7 @@ public class MainControllerAgent extends Agent {
                         break;
 
                     case "Security Alert: Intruder detected!":
-                        message = "Main Controller: Received Security Alert. Sounding the alarm.";
+                        message = "Main Controller Agent: Received Security Alert. Sounding the alarm.";
                         System.out.println(message);
                         JavaFXApplication.appendMessage(message);
 
@@ -53,7 +53,7 @@ public class MainControllerAgent extends Agent {
                         break;
 
                     case "Maintenance: Report Status":
-                        message = "Main Controller: Received Maintenance Report. Checking status.";
+                        message = "Main Controller Agent: Received Maintenance Report. Checking status.";
                         System.out.println(message);
                         JavaFXApplication.appendMessage(message);
 
@@ -64,7 +64,7 @@ public class MainControllerAgent extends Agent {
                         break;
 
                     case "Energy Management: Powerhouse Status":
-                        message = "Main Controller: Received Energy Management Update. Checking powerhouses.";
+                        message = "Main Controller Agent: Received Energy Management Update. Checking powerhouses.";
                         System.out.println(message);
                         JavaFXApplication.appendMessage(message);
 
@@ -76,7 +76,7 @@ public class MainControllerAgent extends Agent {
                         break;
 
                     default:
-                        message = "Main Controller: Received unknown message. Ignoring.";
+                        message = "Main Controller Agent: Received unknown message. Ignoring.";
                         System.out.println(message);
                         JavaFXApplication.appendMessage(message);
                 }

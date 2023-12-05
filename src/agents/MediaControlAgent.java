@@ -18,7 +18,7 @@ public class MediaControlAgent extends Agent {
         currentState = "playing"; 
         pauseCounter = 0;
 
-        String initialMessage = "Hello. My name is " + this.getLocalName() + " and I control the smart speakers.";
+        String initialMessage = "My name is " + this.getLocalName()+" and I control the smart speakers.";
         System.out.println(initialMessage);
         JavaFXApplication.appendMessage(initialMessage);
 
@@ -37,22 +37,22 @@ public class MediaControlAgent extends Agent {
                 String content = msg.getContent();
                 if ("Media Pause".equals(content)) {
                     currentState = "paused";
-                    String pauseMessage = myAgent.getLocalName() + ": Smart speakers paused.";
+                    String pauseMessage = myAgent.getLocalName()+ ": Smart speakers paused.";
                     System.out.println(pauseMessage);
                     JavaFXApplication.appendMessage(pauseMessage);
                     pauseCounter = 0; 
                 } else if ("Media Stop".equals(content)) {
                     currentState = "stopped";
-                    String stopMessage = myAgent.getLocalName() + ": Smart speakers stopped.";
+                    String stopMessage = myAgent.getLocalName()+ ": Smart speakers stopped.";
                     System.out.println(stopMessage);
                     JavaFXApplication.appendMessage(stopMessage);
                 } else if ("Media Play".equals(content)) {
                     currentState = "playing";
-                    String playMessage = myAgent.getLocalName() + ": Smart speakers playing.";
+                    String playMessage = myAgent.getLocalName() +": Smart speakers playing.";
                     System.out.println(playMessage);
                     JavaFXApplication.appendMessage(playMessage);
                 } else {
-                    String unknownMessage = myAgent.getLocalName() + ": Unknown message received.";
+                    String unknownMessage = myAgent.getLocalName()+ ": Unknown message received.";
                     System.out.println(unknownMessage);
                     JavaFXApplication.appendMessage(unknownMessage);
                 }
@@ -72,7 +72,7 @@ public class MediaControlAgent extends Agent {
                 pauseCounter += 5; 
 
                 if (pauseCounter > PAUSE_THRESHOLD) {
-                    String stopMessage = myAgent.getLocalName() + ": Smart speakers stopped due to prolonged pause.";
+                    String stopMessage = myAgent.getLocalName()+ ": Smart speakers stopped due to prolonged pause.";
                     System.out.println(stopMessage);
                     JavaFXApplication.appendMessage(stopMessage);
                 }

@@ -15,7 +15,7 @@ public class ThermalAgent extends Agent {
 
     protected void setup() {
         mainControllerName = "MainController";
-        String initialMessage = "Hello. My name is " + this.getLocalName() + " and I manage thermal conditions in the smart house.";
+        String initialMessage = "My name is " + this.getLocalName() +" Agent"+ " and I manage thermal conditions in the smart house.";
         System.out.println(initialMessage);
         JavaFXApplication.appendMessage(initialMessage);
         addBehaviour(new ThermalBehaviour(this, HEAT_INCREASE_INTERVAL));
@@ -31,24 +31,24 @@ public class ThermalAgent extends Agent {
             int heatIncrease = rand.nextInt(3);
             globalHeatLevel += heatIncrease;
 
-            String heatLevelMessage = "Global Heat Level: " + globalHeatLevel + "°C";
+            String heatLevelMessage =myAgent.getLocalName()+ "Global Heat Level: " + globalHeatLevel + "°C";
             System.out.println(heatLevelMessage);
             JavaFXApplication.appendMessage(heatLevelMessage);
 
             if (globalHeatLevel >= ALERT_THRESHOLD) {
                 ACLMessage alertMsg = new ACLMessage(ACLMessage.INFORM);
                 alertMsg.addReceiver(getAID(mainControllerName));
-                alertMsg.setContent("Thermal Alert: High temperature detected!");
+                alertMsg.setContent(myAgent.getLocalName()+": High temperature detected!");
                 send(alertMsg);
 
-                String alertMessage = myAgent.getLocalName() + ": Thermal Alert - High temperature detected!";
+                String alertMessage = myAgent.getLocalName()+ " Agent " + ": Thermal Alert - High temperature detected!";
                 System.out.println(alertMessage);
                 JavaFXApplication.appendMessage(alertMessage);
 
                 ACLMessage reply = blockingReceive();
                 if (reply != null && reply.getContent().equals("DecreaseTemperature")) {
                     globalHeatLevel = rand.nextInt(6) + 25;
-                    String decreasedMessage = "Global Heat Level decreased to: " + globalHeatLevel + "°C";
+                    String decreasedMessage =myAgent.getLocalName()+ " Agent " +  ":Global Heat Level decreased to: " + globalHeatLevel + "°C";
                     System.out.println(decreasedMessage);
                     JavaFXApplication.appendMessage(decreasedMessage);
                 }
