@@ -1,4 +1,3 @@
-// PeriodicEnergyManagementBehaviour.java
 package behaviors;
 
 import agents.EnergyManagementAgent;
